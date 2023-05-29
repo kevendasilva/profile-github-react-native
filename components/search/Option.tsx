@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 import { Style } from '../../utils/StyleVariables'
@@ -8,29 +8,54 @@ type OptionProps = {
   description: string
   drawLine: boolean
   icon: any
-  title: string
+  id: string
+  navigation: any
+  title: string,
+  userId: string
 }
 
-export const Option: FunctionComponent<OptionProps> = ({ description, drawLine, icon, title, }) => {
-  return (
-    <View style={[optionStyles.option, drawLine && optionStyles.optionWithBorder]}>
-      <View style={styles.icon}>
-        <FontAwesome name={icon} size={Style.icon.size} color={Style.icon.color} />
+export const Option: FunctionComponent<OptionProps> =
+  ({
+    description,
+    drawLine,
+    icon,
+    id,
+    navigation,
+    title,
+    userId
+  }) => {
+    return (
+      <View style={[optionStyles.option, drawLine && optionStyles.optionWithBorder]}>
+        <View style={styles.icon}>
+          <FontAwesome name={icon} size={Style.icon.size} color={Style.icon.color} />
+        </View>
+        <View style={styles.text}>
+          <Text style={styles.title}>
+            {title}
+          </Text>
+          <Text style={styles.description}>
+            {description}
+          </Text>
+        </View>
+        <View style={styles.openPage}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(
+                "Details",
+                {
+                  detailsOf: id,
+                  title: title,
+                  userId: userId
+                }
+              )
+            }}
+          >
+            <MaterialIcons name="keyboard-arrow-right" size={36} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.text}>
-        <Text style={styles.title}>
-          {title}
-        </Text>
-        <Text style={styles.description}>
-          {description}
-        </Text>
-      </View>
-      <View style={styles.openPage}>
-        <MaterialIcons name="keyboard-arrow-right" size={36} color="black" />
-      </View>
-    </View>
-  );
-}
+    );
+  }
 
 const optionStyles = StyleSheet.create({
   option: {

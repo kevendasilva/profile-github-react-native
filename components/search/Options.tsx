@@ -7,54 +7,69 @@ import { Style } from '../../utils/StyleVariables'
 type OptionsProps = {
   displayOptions: boolean
   message?: string
+  navigation: any
+  userId: string
 }
 
-export const Options: FunctionComponent<OptionsProps> = ({ displayOptions, message }) => {
-  const optionsInfo = [
-    {
-      icon: 'user-o',
-      title: 'Bio',
-      description: 'Um pouco sobre o usuário'
-    },
-    {
-      icon: 'building-o',
-      title: 'Orgs',
-      description: 'Organizaçõe que o usuário faz parte'
-    },
-    {
-      icon: 'folder-o',
-      title: 'Repositórios',
-      description: 'Lista contendo todos os repositórios'
-    },
-    {
-      icon: 'users',
-      title: 'Seguidores',
-      description: 'Lista de seguidores'
-    }
-  ];
+export const Options: FunctionComponent<OptionsProps> =
+  ({
+    displayOptions,
+    message,
+    navigation,
+    userId
+  }) => {
+    const optionsInfo = [
+      {
+        icon: 'user-o',
+        id: 'bio',
+        title: 'Bio',
+        description: 'Um pouco sobre o usuário'
+      },
+      {
+        icon: 'building-o',
+        id: 'orgs',
+        title: 'Orgs',
+        description: 'Organizaçõe que o usuário faz parte'
+      },
+      {
+        icon: 'folder-o',
+        id: 'repos',
+        title: 'Repositórios',
+        description: 'Lista contendo todos os repositórios'
+      },
+      {
+        icon: 'users',
+        id: 'followers',
+        title: 'Seguidores',
+        description: 'Lista de seguidores'
+      }
+    ];
 
-  return (
-    <View style={styles.options}>
-      {displayOptions ? (
-        optionsInfo.map((optionInfo, index) => {
-          const lastOption = index == (optionsInfo.length - 1);
+    return (
+      <View style={styles.options}>
+        {displayOptions ? (
+          optionsInfo.map((optionInfo, index) => {
+            const lastOption = index == (optionsInfo.length - 1);
 
-          return <Option
-            key={index}
-            icon={optionInfo.icon}
-            title={optionInfo.title}
-            description={optionInfo.description}
-            drawLine={!lastOption}
-          />
-        })
-      ) : (
-        <Text style={styles.optionsText}>
-          {message}
-        </Text>
-      )}
-    </View>
-  );
-};
+            return <Option
+              key={index}
+              icon={optionInfo.icon}
+              id={optionInfo.id}
+              title={optionInfo.title}
+              description={optionInfo.description}
+              drawLine={!lastOption}
+              navigation={navigation}
+              userId={userId}
+            />
+          })
+        ) : (
+          <Text style={styles.optionsText}>
+            {message}
+          </Text>
+        )}
+      </View>
+    );
+  };
 
 const styles = StyleSheet.create({
   options: {

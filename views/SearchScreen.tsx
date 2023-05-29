@@ -11,7 +11,7 @@ type SearchScreenProps = {
   route: any
 }
 
-export function SearchScreen({ navigation, route }: SearchScreenProps) {
+export const SearchScreen: FunctionComponent<SearchScreenProps> = ({ navigation, route }) => {
   const [userData, setUserData] = useState({
     id: "",
     imageUrl: "",
@@ -97,11 +97,17 @@ export function SearchScreen({ navigation, route }: SearchScreenProps) {
         }
         {
           !isUserDataEmpty ? (
-            <Options displayOptions={true} />
+            <Options
+              displayOptions={true}
+              navigation={navigation}
+              userId={userData.id}
+            />
           ) : (
             <Options
               displayOptions={false}
               message={messageStatus}
+              navigation=""
+              userId=""
             />
           )
         }
