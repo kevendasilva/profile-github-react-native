@@ -1,11 +1,13 @@
 import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Empty } from '../utils/MessageTemplate'
-import { Organization } from '../components/orgs/Organization'
+import { Empty } from '../utils/MessageTemplate';
+import { Follower } from '../components/followers/Follower';
+import { Organization } from '../components/orgs/Organization';
 import { Repository } from '../components/repos/Repository';
 
 type DetailsScreenProps = {
+  navigation: any
   route: any
 };
 
@@ -14,7 +16,7 @@ type dataStruct = {
   children: ReactNode[]
 }
 
-export const DetailsScreen: FunctionComponent<DetailsScreenProps> = ({ route }) => {
+export const DetailsScreen: FunctionComponent<DetailsScreenProps> = ({ navigation, route }) => {
   const initialData: dataStruct = {
     sectionTitle: "",
     children: []
@@ -73,14 +75,35 @@ export const DetailsScreen: FunctionComponent<DetailsScreenProps> = ({ route }) 
                   </Text>
                 ];
             } else {
-              children = json.map((org: any, index: number) => (
+              children = json.map((repo: any, index: number) => (
                 <Repository
                   key={'repos'}
                   index={index}
-                  stargazersCount={org.stargazers_count}
-                  watchersCount={org.watchers_count}
-                  name={org.name}
-                  htmlUrl={org.html_url}
+                  stargazersCount={repo.stargazers_count}
+                  watchersCount={repo.watchers_count}
+                  name={repo.name}
+                  htmlUrl={repo.html_url}
+                />
+              ));
+            }
+            break;
+          case 'followers':
+            if (json.length == 0) {
+              children =
+                [
+                  <Text key={1} style={textStyle.default}>
+                    {Empty("seguidor")}
+                  </Text>
+                ];
+            } else {
+              children = json.map((follower: any, index: number) => (
+                <Follower
+                  key={'followers'}
+                  index={index}
+                  id={follower.login}
+                  navigation={navigation}
+                  userImageUrl={follower.avatar_url}
+                  htmlUrl={follower.html_url}
                 />
               ));
             }
