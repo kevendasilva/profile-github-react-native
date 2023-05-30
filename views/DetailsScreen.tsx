@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Empty } from '../utils/MessageTemplate'
 import { Organization } from '../components/orgs/Organization'
+import { Repository } from '../components/repos/Repository';
 
 type DetailsScreenProps = {
   route: any
@@ -45,19 +46,41 @@ export const DetailsScreen: FunctionComponent<DetailsScreenProps> = ({ route }) 
           case 'orgs':
             if (json.length == 0) {
               children =
-              [
-                <Text key={1} style={textStyle.default}>
-                  {Empty("repositório")}
-                </Text>
-              ];
+                [
+                  <Text key={1} style={textStyle.default}>
+                    {Empty('organização', 'a')}
+                  </Text>
+                ];
             } else {
               children = json.map((org: any, index: number) => (
                 <Organization
+                  key={'orgs'}
                   index={index}
                   avatarUrl={org.avatar_url}
                   description={org.description}
                   login={org.login}
                   url={org.url}
+                />
+              ));
+            }
+            break;
+          case 'repos':
+            if (json.length == 0) {
+              children =
+                [
+                  <Text key={1} style={textStyle.default}>
+                    {Empty("repositório")}
+                  </Text>
+                ];
+            } else {
+              children = json.map((org: any, index: number) => (
+                <Repository
+                  key={'repos'}
+                  index={index}
+                  stargazersCount={org.stargazers_count}
+                  watchersCount={org.watchers_count}
+                  name={org.name}
+                  htmlUrl={org.html_url}
                 />
               ));
             }
