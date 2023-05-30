@@ -25,7 +25,7 @@ export const Organization: FunctionComponent<OrganizationProps> =
           <Image style={styles.image} source={{ uri: avatarUrl }} />
         </View>
         <View style={styles.orgData}>
-          <Text style={styles.login}>Nome{login}</Text>
+          <Text style={styles.login}>{login}</Text>
           <Text style={styles.url}>{url}</Text>
           {description &&
             <Text style={styles.description}>{description}</Text>
